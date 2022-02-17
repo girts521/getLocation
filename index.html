@@ -37,12 +37,13 @@
         function showPosition(position) {
             x.innerHTML = "Latitude: " + position.coords.latitude +
                 "<br>Longitude: " + position.coords.longitude;
-            getCountry()
+            getCountry(position.coords.latitude, position.coords.longitude)
         }
 
-        const getCountry = async () => {
+        const getCountry = async (lat, long) => {
             const country = document.querySelector('#country')
-            const response = await fetch(`http://api.geonames.org/countryCodeJSON?lat=52.5336576&lng=13.4381568&username=girts521`);
+            console.log(lat, long)
+            const response = await fetch(`http://api.geonames.org/countryCodeJSON?lat=${lat}&lng=${long}&username=girts521`);
             const data = await response.json()
 
             country.innerHTML = `Country: ${data.countryName}`
