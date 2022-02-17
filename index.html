@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Get Country</title>
+    <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
+</head>
+
+<body>
+    <div>
+        Show my location
+        <button onclick="getLocation()">Show</button>
+    </div>
+
+    <br>
+
+    <div id="location"></div>
+
+    <br>
+
+    <div id="country"></div>
+
+    <script>
+        var x = document.getElementById("location");
+
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+            getCountry()
+        }
+
+        const getCountry = async () => {
+            const country = document.querySelector('#country')
+            const response = await fetch(`http://api.geonames.org/countryCodeJSON?lat=52.5336576&lng=13.4381568&username=girts521`);
+            const data = await response.json()
+
+            country.innerHTML = `Country: ${data.countryName}`
+
+        }
+
+
+    </script>
+</body>
+
+</html>
